@@ -1,4 +1,6 @@
 import React from "react";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../features/cartSlice";
 
 const ProductCard = ({
   id,
@@ -8,7 +10,22 @@ const ProductCard = ({
   thumbnail,
   images = [],
 }) => {
-  const imgSrc =(images.length ? images[0]  || thumbnail : undefined);
+  const imgSrc = images.length ? images[0] || thumbnail : undefined;
+
+  const dispatch = useDispatch();
+
+  const handleAdd = () => {
+    dispatch(
+      addToCart({
+        id,
+        title,
+        price,
+        category,
+        thumbnail: thumbnail || images[0] || "",
+        quantity: 1,
+      })
+    );
+  };
 
   return (
     <div className="border border-r-2 border-b-2 rounded-2xl m-3 lg:m-5 p-3 max-w-sm shadow-lg shadow-gray-400 lg:w-62">
@@ -27,13 +44,16 @@ const ProductCard = ({
         <div className="flex lg:flex-row flex-col lg:justify-between">
           <h1 className="text-sm font-bold lg:text-lg lg:font-bold">{title}</h1>
           <p className="text-sm bg-accent p-1.5 lg:p-2 rounded-xl w-auto max-w-max lg:h-fit">
-            C{category}
+            {category}
           </p>
         </div>
         <p className="text-sm lg:text-md font-semibold">Price:${price}</p>
       </div>
       <div className="flex flex-row mt-3 justify-center lg:justify-start">
-        <button className="btn btn-primary border border-r-2 border-b-2 rounded-2xl">
+        <button
+          onClick={handleAdd}
+          className="btn btn-primary border border-r-2 border-b-2 rounded-2xl"
+        >
           Add to Cart
         </button>
       </div>

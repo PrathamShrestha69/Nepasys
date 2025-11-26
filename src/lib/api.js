@@ -9,7 +9,7 @@ export async function getRandomProducts(page = 1, limit = 10) {
     const products = meta.data || [];
     return { products, meta };
   } catch (error) {
-    console.error("Failed to fetch random products:", error);
+    console.error("Failed to fetch:", error);
     throw error;
   }
 }

@@ -1,6 +1,7 @@
 import React from "react";
 import { IoMdCart } from "react-icons/io";
 import { Link } from "react-router";
+import { useSelector } from "react-redux";
 
 const NavigationBar = () => {
   return (
@@ -21,9 +22,12 @@ const NavigationBar = () => {
           </Link>
           <Link
             to="/cart"
-            className="mx-4  flex flex-row items-center hover:scale-110 transition-transform duration-200"
+            className="mx-4  flex flex-row items-center hover:scale-110 transition-transform duration-200 relative"
           >
             <IoMdCart className="h-10 w-10" />
+            {useSelector((s) => (s?.cart?.items || []).length) > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-red-500 border " />
+            )}
           </Link>
           <label className="toggle text-base-content">
             <input type="checkbox" value="dark" className="theme-controller" />
@@ -77,9 +81,12 @@ const NavigationBar = () => {
             <Link to="/">Nepasys</Link>
           </div>
           <div className="flex flex-row items-center gap-4">
-            <Link to="/cart" className="mx-4  flex flex-row items-center">
-              <IoMdCart className="h-8 w-8" />
-            </Link>
+              <Link to="/cart" className="mx-4  flex flex-row items-center relative">
+                <IoMdCart className="h-8 w-8" />
+                {useSelector((s) => (s?.cart?.items || []).length) > 0 && (
+                  <span className="absolute -top-0.5 -right-0.5 w-3 h-3 rounded-full bg-red-500 border-2 border-white" />
+                )}
+              </Link>
             <label className="toggle text-base-content">
               <input
                 type="checkbox"
